@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        body {
+            font-family: 'Consolas', monospace;
+            background-color: ghostwhite;
+            margin: 0;
+            padding: 0;
+            background-image: url("{% static 'image/update.jpg' %}");
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+            height: 100vh; 
+        }
+
+        header {
+            background-color: lightgray;
+            padding: 10px;
+            text-align: center;
+        }
+
+        header nav a {
+            text-decoration: none;
+            color: black;
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+
+        header nav a:hover {
+            color: #007BFF; 
+        }
+
+        main {
+            margin: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .event-form {
+            width: 50%;
+            background-color: #f9f9f9; 
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-right: 20px; /* Space between form and image */
+        }
+
+        .event-form h2 {
+            font-size: 24px; 
+            margin-bottom: 15px;
+            color: #333; 
+            text-align: center; 
+        }
+
+        .event-form label {
+            font-size: 14px; 
+            margin-bottom: 5px;
+            display: block;
+            color: #555; 
+        }
+
+        .event-form input {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc; 
+            border-radius: 4px;
+            font-size: 14px; 
+        }
+
+        .event-form input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, transform 0.2s ease; 
+        }
+
+        .event-form input[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: scale(1.05); 
+        }
+
+        /* Styling for the image next to the form */
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            overflow: hidden; /* Ensures the image does not overflow the div */
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image fills the div without distortion */
+        }
+
+        footer {
+            background-color: lightgray;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: -40px;
+            width: 100%;
+            font-size: 14px;
+            margin-top: 140px; 
+        }
+
+        @media screen and (max-width: 768px) {
+            .event-form {
+                width: 100%;
+                margin-right: 0;
+            }
+
+            .profile-image {
+                display: none; /* Hide the image on smaller screens */
+            }
+
+            main {
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'main_page' %}">Home</a>
+            <a href="{% url 'registration' %}">Register</a>
+            <a href="{% url 'event_list' %}">Event List</a>
+            <a href="{% url 'edit_profile' %}">Edit Profile</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="event-form">
+            <h2>Edit Your Profile</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="_method" value="PUT">
+                
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name" value="{{ user.name }}" required>
+
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" name="phone_number" id="phone_number" value="{{ user.phone_number }}" required>
+
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" value="{{ user.email }}" required>
+
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" value="{{ user.password }}" required>
+
+                <input type="submit" value="Update Profile">
+            </form>
+
+            <form method="POST" action="{% url 'delete_user' %}" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                {% csrf_token %}
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="submit" value="Delete Account" style="background-color: red; color: white;">
+            </form>
+        </div>
+
+        <!-- Profile Image Div -->
+        <div class="profile-image">
+            <img src="{% static 'image/profile.png' %}" alt="Profile Picture">
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mahkota Event - KPM Indera Mahkota</p>
+    </footer>
+</body>
+</html>

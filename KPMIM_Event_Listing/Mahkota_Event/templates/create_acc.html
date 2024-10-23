@@ -1,0 +1,208 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahkota Event</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS file -->
+    <style>
+        /* Style for body */
+        body {
+            font-family: 'Consolas', monospace;
+            background-color: ghostwhite;
+            margin: 0;
+            padding: 0;
+            background-image: url("{% static 'image/update.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+        }
+
+        /* Style for header */
+        header {
+            background-color: lightgray;
+            padding: 10px;
+            text-align: center;
+        }
+
+        header h2 {
+            margin: 0;
+            font-size: 28px;
+            color: #333;
+        }
+
+        header nav a {
+            text-decoration: none;
+            color: black;
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+
+        header nav a:hover {
+            color: #007BFF;
+        }
+
+        /* Style for main content */
+        main {
+            margin: 50px;
+            display: flex; /* Use flexbox to align items */
+            justify-content: center; /* Center items horizontally */
+            align-items: flex-start; /* Align items at the top */
+        }
+
+        /* Form container */
+        .form-container {
+            width: 50%; /* Increased width from 30% to 50% */
+            background-color: #f9f9f9;
+            padding: 30px; /* Increased padding for more space inside the form */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-right: 20px; /* Space between form and quote container */
+        }
+
+        .form-container h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+            text-align: center;
+        }
+
+        .form-container label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+            color: #555;
+        }
+
+        .form-container input {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-container button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            border-radius: 4px;
+            padding: 10px;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-bottom: 10px; /* Add margin for spacing between buttons */
+        }
+
+        .form-container button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Quote container */
+        .quote-container {
+            width: 40%; /* Adjust width as needed */
+            background-color: #fff; /* Background color for quotes */
+            padding: 20px; /* Padding for quotes */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            text-align: center; /* Center quotes text */
+        }
+
+        .quote-container h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .quote-container p {
+            font-size: 16px;
+            color: #555;
+            margin: 10px 0; /* Margin for spacing between quotes */
+        }
+
+        /* Footer */
+        footer {
+            background-color: lightgray;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: -40px;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .form-container {
+                width: 100%; /* Make form full width */
+                margin-right: 0; /* Remove margin on small screens */
+            }
+
+            .quote-container {
+                width: 100%; /* Make quote container full width */
+                margin-top: 20px; /* Add margin on top */
+            }
+
+            main {
+                flex-direction: column; /* Stack items vertically */
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h2>Sign In</h2>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h2>Create Your Account</h2>
+            <form action="{% url 'create_acc' %}" method="post">
+                {% csrf_token %}
+                
+                <label for="user_id">User ID:</label>
+                <input type="text" name="user_id" required>
+
+                <label for="name">Name:</label>
+                <input type="text" name="name" required>
+
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" name="phone_number" required>
+
+                <label for="email">Email:</label>
+                <input type="email" name="email" required>
+
+                <label for="password">Password:</label>
+                <input type="password" name="password" required>
+
+                <button type="submit">Register</button>
+                <button type="button" onclick="history.back()">Back</button>
+                
+            </form>
+        </div>
+
+        <div class="quote-container">
+            <h3>Join the Mahkota Event Community!</h3>
+            <p>"Experience unforgettable moments with us!"</p>
+            <p>"Your journey to amazing events starts here!"</p>
+            <p>"Sign up today and never miss an event!"</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mahkota Event - KPM Indera Mahkota</p>
+    </footer>
+
+</body>
+
+</html>

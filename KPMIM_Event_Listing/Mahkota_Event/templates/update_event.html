@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Event</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS file -->
+    <style>
+        /* Style for body */
+        body {
+            font-family: 'Consolas', monospace;
+            background-color: ghostwhite;
+            margin: 0;
+            padding: 0;
+            background-image: url("{% static 'image/update.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+        }
+
+        /* Style for header */
+        header {
+            background-color: lightgray;
+            padding: 10px;
+            text-align: center;
+        }
+
+        header nav a {
+            text-decoration: none;
+            color: black;
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+
+        header nav a:hover {
+            color: #007BFF; /* Optional hover effect */
+        }
+
+        /* Style for main content */
+        main {
+            margin: 50px;
+            display: flex;
+        }
+
+        /* Sidebar for displaying images */
+        .sidebar {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sidebar img {
+            width: 100%;
+            height: 200px; /* Increased height */
+            object-fit: cover; /* Maintain aspect ratio and fill the space */
+            margin-bottom: 15px; /* Space between images */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Update event form */
+        .event-form {
+            width: 50%; /* Increased width */
+            background-color: #f9f9f9;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-left: 20px; /* Space between form and sidebar */
+        }
+
+        .event-form h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+            text-align: center;
+        }
+
+        .event-form label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+            color: #555;
+        }
+
+        .event-form input, .event-form select {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .event-form input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .event-form input[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: lightgray;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: -40px;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .event-form {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .sidebar {
+                display: none; /* Hide sidebar on smaller screens */
+            }
+
+            main {
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'main_page' %}">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Sidebar with event images -->
+        <div class="sidebar">
+            <img src="{% static 'image/food.jpg' %}" alt="Food Event">
+            <img src="{% static 'image/concert.jpg' %}" alt="Concert Event">
+            <img src="{% static 'image/movie.jpg' %}" alt="Movie Event">
+        </div>
+
+        <!-- Update event form -->
+        <div class="event-form">
+            <h2>Update Event</h2>
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="_method" value="PUT">
+                
+                <label for="event_name">Event Name</label>
+                <input type="text" id="event_name" name="event_name" value="{{ event.event_name }}" required>
+
+                <label for="start_date">Start Date</label>
+                <input type="date" id="start_date" name="start_date" value="{{ event.start_event_date }}" required>
+
+                <label for="start_time">Start Time</label>
+                <input type="time" id="start_time" name="start_time" value="{{ event.start_event_time }}" required>
+
+                <label for="end_date">End Date</label>
+                <input type="date" id="end_date" name="end_date" value="{{ event.end_event_date }}" required>
+
+                <label for="end_time">End Time</label>
+                <input type="time" id="end_time" name="end_time" value="{{ event.end_event_time }}" required>
+
+                <label for="venue_id">Select Venue</label>
+                <select id="venue_id" name="venue_id" required>
+                    {% for venue in venues %}
+                    <option value="{{ venue.venue_id }}" {% if event.venue_id.venue_id == venue.venue_id %} selected {% endif %}>
+                        {{ venue.venue_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+
+                <label for="category_id">Select Category</label>
+                <select id="category_id" name="category_id" required>
+                    {% for category in categories %}
+                    <option value="{{ category.category_id }}" {% if event.category_id.category_id == category.category_id %} selected {% endif %}>
+                        {{ category.category_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+
+                <input type="submit" value="Update Event">
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mahkota Event - KPM Indera Mahkota</p>
+    </footer>
+</body>
+</html>

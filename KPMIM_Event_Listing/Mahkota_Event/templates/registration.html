@@ -1,0 +1,289 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahkota Event - Register New Event</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+</head>
+
+<style>
+    /* Style for body */
+    body {
+        font-family: 'Consolas', monospace;
+        background-color: ghostwhite;
+        margin: 0;
+        padding: 0;
+        background-image: url("{% static 'image/update.jpg' %}");
+        background-size: cover; /* Ensures the image covers the area while maintaining aspect ratio */
+        background-position: center; /* Centers the background */
+        background-attachment: fixed; /* Keeps the image fixed on scroll */
+        background-color: ghostwhite; /* Fallback color */
+        margin: 0; /* Remove any unwanted margins */
+        height: 100vh; /* Ensures the background fills the main content area */    
+    }
+
+    /* Style for header */
+    header {
+        background-color: lightgray;
+        padding: 10px;
+        text-align: center;
+    }
+
+    header nav a {
+        text-decoration: none;
+        color: black;
+        padding: 10px 20px;
+        font-size: 18px;
+    }
+
+    header nav a:hover {
+        color: #007BFF; /* Optional hover effect */
+    }
+
+    /* Style for main content */
+    main {
+        margin: 50px;
+    }
+
+    /* Event registration form */
+    .event-form {
+        display: inline-block;
+        width: 30%; /* Further reduced width */
+        vertical-align: top;
+        background-color: #f9f9f9; /* Subtle background color */
+        padding: 20px; /* Adjusted padding */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        border: 1px solid #ddd; /* Added border */
+        margin: 20px; /* Add space around the event form */
+    }
+    h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: whitesmoke; /* White text color */
+            text-shadow: 
+                -1.5px -1.5px 0 #007BFF,  /* Top left */
+                1.5px -1.5px 0 #007BFF,   /* Top right */
+                -1.5px 1.5px 0 #007BFF,   /* Bottom left */
+                1.5px 1.5px 0 #007BFF;    /* Bottom right */ 
+    }
+
+    .event-form h1 {
+        font-size: 24px; /* Reduced heading size */
+        margin-bottom: 15px;
+        color: #333; /* Darker text color */
+        text-align: center; /* Centered heading */
+    }
+
+    .event-form label {
+        font-size: 14px; /* Slightly smaller label font size */
+        margin-bottom: 5px;
+        display: block;
+        color: #555; /* Slightly darker label color */
+    }
+
+    .event-form input,
+    .event-form select {
+        width: 95%;
+        padding: 10px; /* Reduced padding */
+        margin-bottom: 15px; /* Adjusted spacing */
+        border: 1px solid #ccc; /* Lighter border */
+        border-radius: 4px;
+        font-size: 14px; /* Slightly smaller font size */
+    }
+
+    .event-form input[type="submit"] {
+        background-color: #007BFF;
+        color: white;
+        cursor: pointer;
+        border: none;
+        font-size: 16px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform for effect */
+    }
+
+    .event-form input[type="submit"]:hover {
+        background-color: #0056b3;
+        transform: scale(1.05); /* Slightly enlarge on hover */
+    }
+
+    /* Tables for venues and categories */
+    .tables-section {
+        display: inline-block;
+        width: 60%; /* Adjusted width to fit next to smaller form */
+        vertical-align: top;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center; /* Center the text */
+        font-size: 14px; /* Medium font size */
+    }
+
+    th {
+        background-color: #007BFF;
+        color: white;
+    }
+
+    td {
+        background-color: white;
+    }
+
+    tr:hover td {
+        background-color: #f1f1f1;
+    }
+
+    /* Footer */
+    footer {
+        background-color: lightgray;
+        text-align: center;
+        padding: 10px;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        font-size: 14px;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+        .event-form,
+        .tables-section {
+            display: block;
+            width: 100%;
+        }
+
+        main {
+            margin: 20px;
+        }
+    }
+</style>
+
+<body>
+
+    <header>
+        <nav>
+            <a href="{% url 'main_page' %}">Home</a>
+            <a href="{% url 'registration' %}">Register</a>
+            <a href="{% url 'event_list' %}">Event List</a>
+            <a href="{% url 'edit_profile' %}">Edit Profile</a>
+            <a href="{% url 'login' %}">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="event-form">
+            <h1>Register New Event</h1>
+            <form action="" method="post">
+                {% csrf_token %}
+                
+                <label for="event_id">Event ID</label>
+                <input type="text" id="event_id" name="event_id" placeholder="Event ID" required>
+
+                <label for="event_name">Event Name</label>
+                <input type="text" id="event_name" name="event_name" placeholder="Event Name" required>
+
+                <label for="start_date">Start Date</label>
+                <input type="date" id="start_date" name="start_date" required>
+
+                <label for="start_time">Start Time</label>
+                <input type="time" id="start_time" name="start_time" required>
+
+                <label for="end_date">End Date</label>
+                <input type="date" id="end_date" name="end_date" required>
+
+                <label for="end_time">End Time</label>
+                <input type="time" id="end_time" name="end_time" required>
+
+                <label for="venue_id">Select Venue</label>
+                <select id="venue_id" name="venue_id" required>
+                    <option value="">--Select Venue--</option>
+                    {% for venue in venues %}
+                    <option value="{{ venue.venue_id }}">{{ venue.venue_name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="category_id">Select Category</label>
+                <select id="category_id" name="category_id" required>
+                    <option value="">--Select Category--</option>
+                    {% for category in categories %}
+                    <option value="{{ category.category_id }}">{{ category.category_name }}</option>
+                    {% endfor %}
+                </select>
+
+                <input type="submit" value="Register Event">
+            </form>
+        </div>
+
+        <div class="tables-section">
+            <h2>Available Venues</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Venue ID</th>
+                        <th>Venue Name</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for venue in venues %}
+                    <tr>
+                        <td>{{ venue.venue_id }}</td>
+                        <td>{{ venue.venue_name }}</td>
+                        <td>{{ venue.location }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">No venues available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2>Available Categories</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category ID</th>
+                        <th>Category Name</th>
+                        <th>Category Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <td>{{ category.category_id }}</td>
+                        <td>{{ category.category_name }}</td>
+                        <td>{{ category.category_type }}</td>
+                        <td>{{ category.category_description }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">No categories available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mahkota Event - KPM Indera Mahkota</p>
+    </footer>
+
+</body>
+
+</html>
